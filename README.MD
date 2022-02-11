@@ -12,7 +12,7 @@
 - Run script below to install this cli:
 
 ```bash
-npm link
+npm install && npm link
 ```
 
 ## Usage
