@@ -72,7 +72,7 @@ export const rip = async (args: RipArgs) => {
     });
 
     // Remove temp dir
-    await fs.rm(tempDir, {recursive: true});
+    // await fs.rm(tempDir, {recursive: true});
 }
 
 /**
