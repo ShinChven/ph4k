@@ -10,7 +10,8 @@ export const PORNHUB_LOGIN_URL = 'https://www.pornhub.com/login';
 export const PORNHUB_PREMIUM_LOGIN_URL = 'https://www.pornhubpremium.com/login';
 
 /**
- * launch a new browser for user to login pornhub.com manually.
+ * Launch a Chrome tab for user to log in pornhub.com manually.
+ * Cookies will be saved for accessing highest quality of videos.
  */
 export const login = async () => {
     const browser = await newBrowser();
@@ -42,7 +43,8 @@ export const login = async () => {
 };
 
 /**
- * Launch a new browser for user to login pornhubpremium.com manually.
+ * Launch a Chrome tab for user to log in pornhubpremium.com manually.
+ * Cookies will be saved for accessing highest quality of videos.
  */
 export const loginPremium = async () => {
     const browser = await newBrowser();
