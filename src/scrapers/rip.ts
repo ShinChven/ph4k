@@ -40,6 +40,7 @@ export const rip = async (args: RipArgs) => {
     // Create a directory for the video
     const tempDir = path.join(TEMP_DIR, result.viewKey!);
     await fs.ensureDir(tempDir);
+    console.log(`Temp directory:`, tempDir);
 
     // Download video segments
     const files = new Array<string>();
@@ -176,10 +177,17 @@ const downloadSegment = async (segment: VideoSegment, dir: string, index: number
     const dist = path.join(dir, filename);
     if (!(await fs.pathExists(dist))) {
         await download({url, dist: path.join(dir, filename), proxy});
+        printProgress(`Video seq ${index} downloaded`);
     } else {
-        console.log(`${dist} already exists`)
+        console.log(`Video ${index} already exists`);
     }
     return dist;
+}
+
+function printProgress(message: string){
+    process.stdout.clearLine(0);
+    process.stdout.cursorTo(0);
+    process.stdout.write(message);
 }
 
 
