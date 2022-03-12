@@ -8,6 +8,7 @@ import {download} from '../io/download';
 import {exec} from 'child_process';
 import slugify from 'slugify';
 import {ScraperOptions} from '../utils/config';
+import sleep from 'lib-sc/lib/sleep-promise';
 
 export type RipArgs = {
     url: string;
@@ -43,12 +44,29 @@ export const rip = async (args: RipArgs) => {
     // Download video segments
     const files = new Array<string>();
 
-    for (let i = 1; i <= 20000; i++) {
+    let errorCount = 0;
+    const MAX_RETRY_COUNT = 10;
+    const RETRY_INTERVAL = 1;
+
+    for (let i = 1; i <= 20000;) {
         try {
             const file = await downloadSegment(result.segment, tempDir, i, args.proxy);
             files.push(`file '${file}'`);
+            i++;
         } catch (e) {
-            break;
+            // finish downloading if there is no more segments
+            if ((e as { status: number, message: string }).status === 404) {
+                break;
+            }
+            // abort if error reaches max retry count
+            if (errorCount >= MAX_RETRY_COUNT) {
+                console.error(e);
+                return
+            }
+            // count errors
+            errorCount++;
+            console.log(`Retry in ${RETRY_INTERVAL} second(s)...`);
+            await sleep(RETRY_INTERVAL * 1000);
         }
     }
 
