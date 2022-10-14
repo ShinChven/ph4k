@@ -8,7 +8,7 @@ import {download} from '../io/download';
 import {exec} from 'child_process';
 import slugify from 'slugify';
 import {ScraperOptions} from '../utils/config';
-import sleep from 'lib-sc/lib/sleep-promise';
+import sleep from 'lib-sc/lib/sleep';
 
 export type RipArgs = {
     url: string;

@@ -1,6 +1,7 @@
 # PH4K
 
 > Rip video from p***hub at it's highest quality.
+> Headless download is deprecated
 
 ## Install
 
